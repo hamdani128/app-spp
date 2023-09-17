@@ -19,6 +19,7 @@ class Transaksi extends CI_Controller
         $this->payload = json_decode(file_get_contents("php://input"), true);
         $this->userid = $this->session->userdata("user_id");
         $this->now = date("Y-m-d H:i:s");
+        $this->load->model('M_transaksi');
     }
 
     public function index()
@@ -63,6 +64,7 @@ class Transaksi extends CI_Controller
                 b.nisn as nisn,
                 b.nama as nama,
                 b.kelas as kelas,
+                b.no_hp as no_hp,
                 a.bulan as bulan,
                 a.semester as semester,
                 a.iuran as iuran,
@@ -76,6 +78,7 @@ class Transaksi extends CI_Controller
                 a.id as id, 
                 a.nisn as nisn,
                 a.nama as nama,
+                a.no_hp as no_hp,
                 b.kelas as kelas
                 FROM
                 siswa a
@@ -88,6 +91,42 @@ class Transaksi extends CI_Controller
             ->set_content_type('application/json')
             ->set_output(json_encode($query));
     }
+
+
+    public function remind_number()
+    {
+        $number_all = $this->payload['no_hp'];
+        $bulan = $this->payload['bulan'];
+        // $kelas = $this->payload['kelas'];
+        $message = 'Yth : Bapak / Ibu Orang Tua Wali ' . "\n" .
+            'Sehubungan Dengan Periode Pembayaran Iuran Siwa untuk Bulan ' . $bulan .  '' . "\n" .
+            'Diharapakan Segera Dibayarkan';
+
+        if (isset($number_all) && is_array($number_all)) {
+            // Di sini Anda memiliki array no_hp yang berisi nomor-nomor yang telah dipilih
+            // Anda dapat melakukan operasi yang sesuai dengan data ini
+            foreach ($number_all as $no_hp) {
+                // Lakukan sesuatu dengan setiap nomor telepon (contoh: kirim pesan)
+                // echo $no_hp;
+                $this->M_transaksi->SendWA($no_hp, $message);
+            }
+            // Anda dapat memberikan respons yang sesuai, seperti sukses atau pesan lainnya
+            $response = [
+                'status' => 'success',
+                'message' => 'Pesan pengingat telah dikirim.',
+            ];
+        } else {
+            // Data yang diterima tidak sesuai, berikan respons error
+            $response = [
+                'status' => 'error',
+                'message' => 'Data yang diterima tidak sesuai.',
+            ];
+        }
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($response));
+    }
+
 
     public function getdata_transaksi()
     {

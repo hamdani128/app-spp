@@ -65,15 +65,31 @@ app.controller('SiswaTransaksiAppController', function ($scope, $http) {
     }
     $scope.selectedItems = [];
     $scope.RemindMessage = function () {
+        var periode = $("#cmb_periode").val();
         var dataTerpilih = [];
         angular.forEach($scope.DataTransaksi, function (dt) {
             if ($scope.selectedItems[dt.id]) {
                 // Checkbox terpilih, tambahkan ke data terpilih
-                dataTerpilih.push(dt);
+                dataTerpilih.push(dt.no_hp);
             }
         });
-        // Lakukan apa yang Anda inginkan dengan dataTerpilih
-        console.log(dataTerpilih);
+        var formdata = {
+            no_hp: dataTerpilih,
+            bulan: periode,
+        };
+        $http.post(base_url('adm/transaksi/remind_number'), formdata)
+            .then(function (response) {
+                var data = response.data;
+                if (data.status === "success") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Good Luck',
+                        text: 'Reminder Berhasil Dilakukan !'
+                    });
+                }
+            }).catch(function (error) {
+                console.error('Terjadi kesalahan saat menyimpan data:', error);
+            });
     }
 
 });
