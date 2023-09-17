@@ -29,6 +29,66 @@ class Transaksi extends CI_Controller
         $this->load->view('layout/index', $data);
     }
 
+    public function siswa()
+    {
+        $data = [
+            'content' => 'pages/transaksi/siswa',
+        ];
+        $this->load->view('layout/index', $data);
+    }
+
+    public function getdata_periode()
+    {
+        $query = $this->db->select("bulan")->from('info_spp')->group_by("bulan")->get()->result();
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($query));
+    }
+
+    public function getdata_kelas()
+    {
+        $query = $this->db->select("kelas")->from('kelas')->group_by("kelas")->get()->result();
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($query));
+    }
+
+    public function getdata_transaksi_siswa()
+    {
+        $periode = $this->payload['periode'];
+        $kelas = $this->payload['kelas'];
+        $SQL = "SELECT 
+                a.id as id,
+                a.no_invoice as no_invoice,
+                b.nisn as nisn,
+                b.nama as nama,
+                b.kelas as kelas,
+                a.bulan as bulan,
+                a.semester as semester,
+                a.iuran as iuran,
+                a.jumlah_dibayar as jumlah_dibayar,
+                a.denda as denda,
+                a.status_bayar as status_bayar,
+                a.updated_at as updated_at
+                FROM transaksi_spp a 
+                LEFT JOIN (
+                SELECT
+                a.id as id, 
+                a.nisn as nisn,
+                a.nama as nama,
+                b.kelas as kelas
+                FROM
+                siswa a
+                LEFT JOIN kelas b ON a.kelas_id = b.id
+                ) b ON a.siswa_id = b.id
+                WHERE a.bulan='" . $periode . "' AND b.kelas='" . $kelas  . "'";
+
+        $query = $this->db->query($SQL)->result();
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($query));
+    }
+
     public function getdata_transaksi()
     {
         $nisn = $this->payload['nisn'];

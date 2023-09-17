@@ -193,6 +193,7 @@
     <script src="<?= base_url() ?>public/assets/custom/spp.js"></script>
     <script src="<?= base_url() ?>public/assets/custom/siswa.js"></script>
     <script src="<?= base_url() ?>public/assets/custom/transaksi.js"></script>
+    <script src="<?= base_url() ?>public/assets/custom/siswa_transaksi.js"></script>
     <script src="<?= base_url() ?>public/assets/custom/riwayat_transaksi.js"></script>
     <script src="<?= base_url() ?>public/assets/custom/home_siswa.js"></script>
 
