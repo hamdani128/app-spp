@@ -55,7 +55,8 @@ class Transaksi extends CI_Controller
                 siswa a
                 LEFT JOIN kelas b ON a.kelas_id = b.id
                 ) b ON a.siswa_id = b.id
-                WHERE b.nisn='" . $nisn . "'";
+                WHERE b.nisn='" . $nisn . "' 
+                AND a.status_bayar = 'Non Payment'";
         $query1 = $this->db->query($SQL1)->result();
         $SQL2 = "SELECT
                 a.nisn as nisn,
@@ -78,9 +79,58 @@ class Transaksi extends CI_Controller
             ->set_output(json_encode($data));
     }
 
+    public function gettransaksi_validasi()
+    {
+        $SQL = "SELECT
+                a.id as id,
+                b.kelas as kelas,
+                b.nisn as nisn,
+                b.nama as nama,
+                b.jk as jk,
+                b.ortu_laki as ortu_laki,
+                b.ortu_perempuan as ortu_perempuan,
+                b.no_hp as no_hp,
+                a.no_invoice as no_invoice,
+                a.bulan as bulan,
+                a.semester as semester,
+                a.iuran as iuran,
+                a.jumlah_dibayar as jumlah_dibayar,
+                a.denda as denda,
+                a.tgl_bayar as tgl_bayar,
+                a.status_bayar as status_bayar,
+                a.metode_bayar as metode_bayar,
+                a.channel as channel,
+                a.kode_ref as kode_ref,
+                a.user_id as user_id,
+                a.file_image as file_image,
+                a.created_at as created_at,
+                a.updated_at as updated_at
+                FROM 
+                transaksi_spp a 
+                LEFT JOIN (
+                    SELECT
+                    a.id as id, 
+                    b.kelas as kelas,
+                    a.nisn as nisn,
+                    a.nama as nama,
+                    a.jk as jk,
+                    a.ortu_laki as ortu_laki,
+                    a.ortu_perempuan as ortu_perempuan,
+                    a.no_hp as no_hp
+                    FROM siswa a 
+                    LEFT JOIN kelas b ON a.kelas_id = b.id
+                ) b ON a.siswa_id = b.id
+                WHERE a.status_bayar='Menunggu Validasi'
+        ";
+        $query = $this->db->query($SQL)->result();
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($query));
+    }
+
+
     public function pembayaran()
     {
-
         $id = $this->payload['id'];
         $jumlah_dibayar = $this->payload['jumlah_dibayar'];
         $denda = $this->payload['denda'];
@@ -187,5 +237,32 @@ class Transaksi extends CI_Controller
         $this->output
             ->set_content_type('application/json')
             ->set_output(json_encode($query));
+    }
+
+
+    public function validasi_pembayaran()
+    {
+        $id = $this->payload['id'];
+        $data = [
+            'status_bayar' => 'Payment',
+            'user_id' => $this->userid,
+            'updated_at' => $this->now,
+        ];
+        $query = $this->db->where('id', $id)->update("transaksi_spp", $data);
+
+        if ($query) {
+            $response = [
+                'status' => 'success',
+                'message' => 'Success Validasi',
+            ];
+        } else {
+            $response = [
+                'status' => 'error',
+                'message' => 'Error Validasi',
+            ];
+        }
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($response));
     }
 }

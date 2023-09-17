@@ -19,85 +19,181 @@
         <hr />
         <div class="card border-top border-0 border-4 border-primary">
             <div class="card-body p-2">
-                <div class="form-group">
-                    <label for="">Masukkan NISN</label>
-                    <div class="input-group">
-                        <input type="text" class="form-control" name="nisn" id="nisn" ng-model="nisn" placeholder="Masukkan NISN Siswa">
-                        <button class="btn btn-md btn-primary" ng-click="CekDataSiswa()">
-                            <i class="bx bx-filter"></i>
-                            Filter
-                        </button>
-                    </div>
-                </div>
-                <table style="width: 100%;margin-top: 10px;">
-                    <tr>
-                        <td style="width: 15%;">NISN</td>
-                        <td style="width: 2%;">:</td>
-                        <td style="width: 70%;" id="nisn_list">-</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 15%;">Nama Lengkap</td>
-                        <td style="width: 2%;">:</td>
-                        <td style="width: 70%;" id="nama_list">-</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 15%;">Kelas</td>
-                        <td style="width: 2%;">:</td>
-                        <td style="width: 70%;" id="kelas_list">-</td>
-                    </tr>
-                    <tr>
-                        <td style="width: 15%;">Jenis Kelamin</td>
-                        <td style="width: 2%;">:</td>
-                        <td style="width: 70%;" id="jk_list">-</td>
-                    </tr>
-                </table>
-
-                <div class="table-responsive">
-                    <table datatable="ng" dt-options="vm.dtOptions" class="table table-striped table-bordered" style="width:100%">
-                        <thead class="bg-dark">
+                <ul class="nav nav-tabs nav-primary bg-light text-white" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#primaryhome" role="tab" aria-selected="true">
+                            <div class="d-flex align-items-center">
+                                <div class="tab-icon"><i class='bx bx-layer font-18 me-1'></i>
+                                </div>
+                                <div class="tab-title">Pembayaran Langsung</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-bs-toggle="tab" href="#primaryprofile" role="tab" aria-selected="false">
+                            <div class="d-flex align-items-center">
+                                <div class="tab-icon"><i class='bx bx-layer font-18 me-1'></i>
+                                </div>
+                                <div class="tab-title">Pembayaran Pihak Ketiga</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content py-3">
+                    <div class="tab-pane fade show active" id="primaryhome" role="tabpanel">
+                        <div class="form-group">
+                            <label for="">Masukkan NISN</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="nisn" id="nisn" ng-model="nisn" placeholder="Masukkan NISN Siswa">
+                                <button class="btn btn-md btn-primary" ng-click="CekDataSiswa()">
+                                    <i class="bx bx-filter"></i>
+                                    Filter
+                                </button>
+                            </div>
+                        </div>
+                        <table style="width: 100%;margin-top: 10px;">
                             <tr>
-                                <th class="text-white">No.</th>
-                                <th class="text-white">Action</th>
-                                <th class="text-white">No.Invoice</th>
-                                <th class="text-white">Bulan</th>
-                                <th class="text-white">Semester</th>
-                                <th class="text-white">Iuran</th>
-                                <th class="text-white">Jumlah Dibayar</th>
-                                <th class="text-white">Jumlah Denda</th>
-                                <th class="text-white">Status Bayar</th>
+                                <td style="width: 15%;">NISN</td>
+                                <td style="width: 2%;">:</td>
+                                <td style="width: 70%;" id="nisn_list">-</td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="dt in Transaksi" ng-if="Transaksi.length > 0">
-                                <td>{{$index + 1}}</td>
-                                <td>
-                                    <div class="input-group">
-                                        <div class="button-group">
-                                            <button class="btn btn-sm btn-success" ng-click="LakukanPembayaran(dt)">
-                                                <i class="bx bx-money"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-secondary" ng-click="ShowRiwayatPemabyaran(dt)">
-                                                <i class="bx bx-show"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>{{dt.no_invoice}}</td>
-                                <td>{{dt.bulan}}</td>
-                                <td>{{dt.semester}}</td>
-                                <td>{{dt.iuran}}</td>
-                                <td>{{dt.jumlah_dibayar}}</td>
-                                <td>{{dt.denda}}</td>
-                                <td>
-                                    <span ng-if="dt.status_bayar=='Non Payment'" class="badge bg-danger">{{dt.status_bayar}}</span>
-                                    <span ng-if="dt.status_bayar=='Payment'" class="badge bg-success">{{dt.status_bayar}}</span>
-                                </td>
+                            <tr>
+                                <td style="width: 15%;">Nama Lengkap</td>
+                                <td style="width: 2%;">:</td>
+                                <td style="width: 70%;" id="nama_list">-</td>
                             </tr>
-                            <tr ng-if="Transaksi.length === 0">
-                                <td colspan="12" class="text-center weight">No data available</td>
+                            <tr>
+                                <td style="width: 15%;">Kelas</td>
+                                <td style="width: 2%;">:</td>
+                                <td style="width: 70%;" id="kelas_list">-</td>
                             </tr>
-                        </tbody>
-                    </table>
+                            <tr>
+                                <td style="width: 15%;">Jenis Kelamin</td>
+                                <td style="width: 2%;">:</td>
+                                <td style="width: 70%;" id="jk_list">-</td>
+                            </tr>
+                        </table>
+
+                        <div class="table-responsive">
+                            <table datatable="ng" dt-options="vm.dtOptions" class="table table-striped table-bordered" style="width:100%">
+                                <thead class="bg-dark">
+                                    <tr>
+                                        <th class="text-white">No.</th>
+                                        <th class="text-white">Action</th>
+                                        <th class="text-white">No.Invoice</th>
+                                        <th class="text-white">Bulan</th>
+                                        <th class="text-white">Semester</th>
+                                        <th class="text-white">Iuran</th>
+                                        <th class="text-white">Jumlah Dibayar</th>
+                                        <th class="text-white">Jumlah Denda</th>
+                                        <th class="text-white">Status Bayar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="dt in Transaksi" ng-if="Transaksi.length > 0">
+                                        <td>{{$index + 1}}</td>
+                                        <td>
+                                            <div class="input-group">
+                                                <div class="button-group">
+                                                    <button class="btn btn-sm btn-success" ng-click="LakukanPembayaran(dt)">
+                                                        <i class="bx bx-money"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-secondary" ng-click="ShowRiwayatPemabyaran(dt)">
+                                                        <i class="bx bx-show"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>{{dt.no_invoice}}</td>
+                                        <td>{{dt.bulan}}</td>
+                                        <td>{{dt.semester}}</td>
+                                        <td>{{dt.iuran}}</td>
+                                        <td>{{dt.jumlah_dibayar}}</td>
+                                        <td>{{dt.denda}}</td>
+                                        <td>
+                                            <span ng-if="dt.status_bayar=='Non Payment'" class="badge bg-danger">{{dt.status_bayar}}</span>
+                                            <span ng-if="dt.status_bayar=='Payment'" class="badge bg-success">{{dt.status_bayar}}</span>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="Transaksi.length === 0">
+                                        <td colspan="12" class="text-center weight">No data available</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="primaryprofile" role="tabpanel">
+                        <div class="row pb-2">
+                            <div class="col-md-12 text-end">
+                                <button class="btn btn-md btn-primary">
+                                    <i class="bx bx-refresh"></i>
+                                    Refresh
+                                </button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table datatable="ng" dt-options="vm.dtOptions" class="table table-striped table-bordered" style="width:100%">
+                                <thead class="bg-dark">
+                                    <tr>
+                                        <th class="text-white">No.</th>
+                                        <th class="text-white">#Action</th>
+                                        <th class="text-white">Created At</th>
+                                        <th class="text-white">Status Bayar</th>
+                                        <th class="text-white">NISN</th>
+                                        <th class="text-white">Nama Lengkap</th>
+                                        <th class="text-white">Kelas</th>
+                                        <th class="text-white">Jenis Kelamin</th>
+                                        <th class="text-white">No.Invoice</th>
+                                        <th class="text-white">Bulan</th>
+                                        <th class="text-white">Semester</th>
+                                        <th class="text-white">Iuran</th>
+                                        <th class="text-white">Jumlah Dibayar</th>
+                                        <th class="text-white hidden">Jumlah Denda</th>
+                                        <th class="text-white">Metode Bayar</th>
+                                        <th class="text-white">File Image</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="dt in TransaksiValidasi" ng-if="TransaksiValidasi.length > 0">
+                                        <td>{{$index + 1}}</td>
+                                        <td>
+                                            <div class="button-group">
+                                                <button class="btn btn-md btn-dark" ng-click="ShowImagePembayaran(dt)">
+                                                    <i class="bx bx-show"></i>
+                                                    Check
+                                                </button>
+                                                <button class="btn btn-md btn-info" ng-click="KonfirmasiPembayaranClient(dt)">
+                                                    <i class="bx bx-check"></i>
+                                                    Valid
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td>{{dt.created_at}}</td>
+                                        <td>
+                                            <span ng-if="dt.status_bayar=='Menunggu Validasi'" class="badge bg-warning">{{dt.status_bayar}}</span>
+                                        </td>
+                                        <td>{{dt.nisn}}</td>
+                                        <td>{{dt.nama}}</td>
+                                        <td>{{dt.kelas}}</td>
+                                        <td>{{dt.jk}}</td>
+                                        <td>{{dt.no_invoice}}</td>
+                                        <td>{{dt.bulan}}</td>
+                                        <td>{{dt.semester}}</td>
+                                        <td>{{dt.iuran}}</td>
+                                        <td>{{dt.jumlah_dibayar}}</td>
+                                        <td class="hidden">{{dt.denda}}</td>
+                                        <td>{{dt.metode_bayar}}</td>
+                                        <td>{{dt.file_image}}</td>
+                                    </tr>
+                                    <tr ng-if="TransaksiValidasi.length === 0">
+                                        <td colspan="16" class="text-center weight">No data available
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -162,4 +258,25 @@
         </div>
     </div>
     <!-- End Modal Pembayaran -->
+
+
+
+    <!-- Modal View Pembayaran Check -->
+    <div id="my-modal-check" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-dark">
+                    <h5 class="modal-title text-white">Check Validasi Capture</h5>
+                    <button type="button" class="btn-close btn-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <img src="" alt="" id="show_image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

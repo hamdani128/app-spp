@@ -15,6 +15,7 @@ class Home extends CI_Controller
         }
         $this->level = $this->session->userdata('level');
     }
+
     public function index()
     {
         if ($this->level == "Super Admin") {

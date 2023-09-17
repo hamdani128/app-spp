@@ -11,6 +11,8 @@ function base_url(string_url) {
 var app = angular.module('HomeSiswa', ['datatables']);
 app.controller('HomeSiswaController', function ($scope, $http) {
     $scope.Transaksi = [];
+    $scope.TransaksiProgress = [];
+    $scope.TransaksiSelesai = [];
     $scope.LoadInfoSiswa = function () {
         $http.get(base_url('client/siswa/getdatasiswa'))
             .then(function (response) {
@@ -21,6 +23,8 @@ app.controller('HomeSiswaController', function ($scope, $http) {
                 document.getElementById("orang_tua_home_pr").innerHTML = response.data.row.ortu_perempuan;
                 document.getElementById("orang_tua_home_lk").innerHTML = response.data.row.ortu_laki;
                 $scope.Transaksi = response.data.transaksi;
+                $scope.TransaksiProgress = response.data.transaksi_menunggu;
+                $scope.TransaksiSelesai = response.data.payment;
             })
             .catch(function (error) {
                 console.error('Terjadi kesalahan:', error);
@@ -79,7 +83,7 @@ app.controller('HomeSiswaController', function ($scope, $http) {
                     Swal.fire({
                         icon: 'success',
                         title: 'Good Job',
-                        text: 'Data Berhasil Disimpan!'
+                        text: 'Transaksi Berhasil Diproses'
                     });
                     document.location.reload();
                 }
