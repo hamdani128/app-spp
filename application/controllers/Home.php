@@ -14,6 +14,7 @@ class Home extends CI_Controller
             redirect(base_url("auth/login"));
         }
         $this->level = $this->session->userdata('level');
+        $this->load->model('M_transaksi');
     }
 
     public function index()

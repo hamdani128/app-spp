@@ -55,13 +55,15 @@ class M_transaksi extends CI_Model
 
     public function SendWA($number, $message)
     {
+        $setting = $this->db->get("settings")->row();
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
         // $phone = "+6281533857572";  // Nomor tujuan
-        $apikey = "HakdlsMz2PqqbWCaAADxZ3CIlyVfv4";   // API Key Anda
+        $apikey = $setting->api_key;   // API Key Anda
+        $sender = $setting->number_blast;
         // $message = 'Assalllamualaikum Cinnaayyy' . "\n" . 'This is a new line in the message.';
         // $url = 'http://api.textmebot.com/send.php?recipient=' . $phone . '&apikey=' . $apikey . '&text=' . urlencode($message);
-        $url = 'https://wa.srv12.wapanels.com/send-message?api_key=' . $apikey . '&sender=6281375078785&number=' . $number . '&message=' . urlencode($message);
+        $url = 'https://wa.srv12.wapanels.com/send-message?api_key=' . $apikey . '&sender=' . $sender . '&number=' . $number . '&message=' . urlencode($message);
         $html = file_get_contents($url);
         // Anda juga bisa mengembalikan respons atau menampilkan sesuai kebutuhan
         if ($html !== false) {
@@ -80,13 +82,15 @@ class M_transaksi extends CI_Model
 
     public function sendWAImage($url_image, $caption, $number)
     {
+        $setting = $this->db->get("settings")->row();
         error_reporting(E_ALL);
         ini_set('display_errors', 1);
         // $phone = "+6281533857572";  // Nomor tujuan
-        $apikey = "HakdlsMz2PqqbWCaAADxZ3CIlyVfv4";   // API Key Anda
+        $apikey = $setting->api_key;   // API Key Anda
+        $sender = $setting->number_blast;
         // $message = 'Assalllamualaikum Cinnaayyy' . "\n" . 'This is a new line in the message.';
         // $url = 'http://api.textmebot.com/send.php?recipient=' . $phone . '&apikey=' . $apikey . '&text=' . urlencode($message);
-        $url = 'https://wa.srv12.wapanels.com/send-media?api_key=' . $apikey . '&sender=6281375078785&number=' . $number . '&media_type=image&caption=' . urlencode($caption) . '&url=' . $url_image . '';
+        $url = 'https://wa.srv12.wapanels.com/send-media?api_key=' . $apikey . '&sender=' . $sender . '&number=' . $number . '&media_type=image&caption=' . urlencode($caption) . '&url=' . $url_image . '';
         $html = file_get_contents($url);
         // Anda juga bisa mengembalikan respons atau menampilkan sesuai kebutuhan
         if ($html !== false) {

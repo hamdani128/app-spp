@@ -49,7 +49,7 @@
         <!--end header -->
         <!--start page wrapper -->
         <?php if ($content) { ?>
-        <?php $this->load->view($content); ?>
+            <?php $this->load->view($content); ?>
         <?php } ?>
         <!--end page wrapper -->
         <!--start overlay-->
@@ -196,6 +196,7 @@
     <script src="<?= base_url() ?>public/assets/custom/siswa_transaksi.js"></script>
     <script src="<?= base_url() ?>public/assets/custom/riwayat_transaksi.js"></script>
     <script src="<?= base_url() ?>public/assets/custom/home_siswa.js"></script>
+    <script src="<?= base_url() ?>public/assets/custom/setting.js"></script>
 
     <script src="<?= base_url() ?>public/assets/plugins/fancy-file-uploader/jquery.ui.widget.js"></script>
     <script src="<?= base_url() ?>public/assets/plugins/fancy-file-uploader/jquery.fileupload.js"></script>
@@ -203,17 +204,17 @@
     <script src="<?= base_url() ?>public/assets/plugins/fancy-file-uploader/jquery.fancy-fileupload.js"></script>
     <script src="<?= base_url() ?>public/assets/plugins/Drag-And-Drop/dist/imageuploadify.min.js"></script>
     <script>
-    $('#fancy-file-upload').FancyFileUpload({
-        params: {
-            action: 'fileuploader'
-        },
-        maxfilesize: 1000000
-    });
+        $('#fancy-file-upload').FancyFileUpload({
+            params: {
+                action: 'fileuploader'
+            },
+            maxfilesize: 1000000
+        });
     </script>
     <script>
-    $(document).ready(function() {
-        $('#image-uploadify').imageuploadify();
-    })
+        $(document).ready(function() {
+            $('#image-uploadify').imageuploadify();
+        })
     </script>
 </body>
 

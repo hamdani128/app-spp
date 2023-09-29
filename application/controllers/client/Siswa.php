@@ -26,7 +26,9 @@ class Siswa extends CI_Controller
         $transaksi1 = $this->db->where('siswa_id', $row->id)->where('status_bayar', 'Non Payment')->get('transaksi_spp')->result();
         $transaksi2 = $this->db->where('siswa_id', $row->id)->where('status_bayar', 'Menunggu Validasi')->get('transaksi_spp')->result();
         $transaksi3 = $this->db->where('siswa_id', $row->id)->where('status_bayar', 'Payment')->get('transaksi_spp')->result();
+        $row_akun = $this->db->where('username', $username)->get('users')->row();
         $data = [
+            'row_akun' => $row_akun,
             'row' => $row,
             'transaksi' => $transaksi1,
             'transaksi_menunggu' => $transaksi2,
@@ -92,7 +94,7 @@ class Siswa extends CI_Controller
                 'Jumlah Dibayar : ' .  $this->input->post('jumlah_dibayar') . "\n" .
                 'Meode Bayar : ' .  $this->input->post('channel_bayar') . "\n";
             // echo $message;
-            $this->M_transaksi->sendWAImage($sumber_file_server,  $message, "6281533857572");
+            $$this->M_transaksi->sendWAImage($sumber_file_server,  $message, $this->db->get("settings")->row()->number_blast);
             $data = [
                 'file_image' => $uploader['upload_data']['file_name'],
                 'no_invoice' => $invoice,

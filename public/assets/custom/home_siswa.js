@@ -22,9 +22,17 @@ app.controller('HomeSiswaController', function ($scope, $http) {
                 document.getElementById("jk_home").innerHTML = response.data.row.jk;
                 document.getElementById("orang_tua_home_pr").innerHTML = response.data.row.ortu_perempuan;
                 document.getElementById("orang_tua_home_lk").innerHTML = response.data.row.ortu_laki;
+
                 $scope.Transaksi = response.data.transaksi;
                 $scope.TransaksiProgress = response.data.transaksi_menunggu;
                 $scope.TransaksiSelesai = response.data.payment;
+
+                $("#username").val(response.data.row_akun.username);
+                $("#old_password").val(response.data.row_akun.password);
+
+                document.getElementById("username").readOnly = true;
+                document.getElementById("old_password").readOnly = true;
+
             })
             .catch(function (error) {
                 console.error('Terjadi kesalahan:', error);
