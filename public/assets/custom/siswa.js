@@ -31,11 +31,23 @@ app.controller('MasterSiswaController', function ($scope, $http) {
             });
     }
     $scope.CMBKelas();
+    $scope.CMBGolongan = function () {
+        $http.get(base_url('adm/golongan/getdata'))
+            .then(function (response) {
+                var optionsData = response.data;
+                $scope.GolonganOptions = optionsData;
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
+    }
+
+    $scope.CMBGolongan();
     $scope.AddSiswa = function () {
         $("#my-modal").modal("show");
     }
 
-    $scope.SimpanKelas = function () {
+    $scope.SimpanSiswa = function () {
         var kelas = $scope.cmb_kelas;
         var nisn = $scope.nisn;
         var nama = $scope.nama;
@@ -53,6 +65,9 @@ app.controller('MasterSiswaController', function ($scope, $http) {
             selectedText = selectedOption.kelas;
         }
 
+        var cmb_golongan = document.getElementById("cmb_golongan");
+        var cmb_golongan_value = cmb_golongan.options[cmb_golongan.selectedIndex].value;
+
         if (kelas === undefined || nisn === undefined || jk === undefined || nama === undefined || ortua_pr === undefined || ortua_lk === undefined || no_hp === undefined) {
             Swal.fire({
                 icon: 'warning',
@@ -68,6 +83,7 @@ app.controller('MasterSiswaController', function ($scope, $http) {
                 ortu_laki: ortua_lk,
                 ortu_perempuan: ortua_pr,
                 no_hp: no_hp,
+                golongan:cmb_golongan_value,
             };
             $http.post(base_url('adm/siswa/insert'), formdata)
                 .then(function (response) {
@@ -97,6 +113,7 @@ app.controller('MasterSiswaController', function ($scope, $http) {
         $("#ortu_perempuan_update").val($scope.dt.ortu_perempuan);
         $("#ortu_laki_update").val($scope.dt.ortu_laki);
         $("#no_hp_update").val($scope.dt.no_hp);
+        $("#cmb_golongan_update").val($scope.dt.golongan_id);
         $("#my-modal-edit").modal("show");
     }
 
@@ -109,6 +126,7 @@ app.controller('MasterSiswaController', function ($scope, $http) {
         var ortu_pr = $("#ortu_perempuan_update").val();
         var ortu_lk = $("#ortu_laki_update").val();
         var no_hp = $("#no_hp_update").val();
+        var golongan = $("#cmb_golongan_update").val();
 
         var formdata = {
             id: id,
@@ -119,6 +137,7 @@ app.controller('MasterSiswaController', function ($scope, $http) {
             ortu_laki: ortu_lk,
             ortu_perempuan: ortu_pr,
             no_hp: no_hp,
+            golongan:golongan,
         }
         $http.post(base_url('adm/siswa/update'), formdata)
             .then(function (response) {

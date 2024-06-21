@@ -36,9 +36,11 @@ class Siswa extends CI_Controller
     {
         $SQL = "SELECT 
                 b.kelas as kelas,
-                a.*
+                a.*,
+                c.golongan
                 FROM siswa a
-                LEFT JOIN kelas b ON a.kelas_id=b.id";
+                LEFT JOIN kelas b ON a.kelas_id=b.id
+                LEFT JOIN golongan c ON a.golongan_id=c.id";
         $query = $this->db->query($SQL)->result();
         $this->output
             ->set_content_type('application/json')
@@ -55,6 +57,7 @@ class Siswa extends CI_Controller
             'ortu_laki' => $this->payload['ortu_laki'],
             'ortu_perempuan' => $this->payload['ortu_perempuan'],
             'no_hp' => $this->payload['no_hp'],
+            'golongan_id' => $this->payload['golongan'],
             'status_akun' => 'Non Active',
             'status_transaksi' => 'Non Active',
             'user_id' => $this->userid,
@@ -84,6 +87,7 @@ class Siswa extends CI_Controller
             'ortu_laki' => $this->payload['ortu_laki'],
             'ortu_perempuan' => $this->payload['ortu_perempuan'],
             'no_hp' => $this->payload['no_hp'],
+            'golongan_id' => $this->payload['golongan'],
             'user_id' => $this->userid,
             'created_at' => $this->now,
             'updated_at' => $this->now

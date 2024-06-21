@@ -19,7 +19,7 @@ class Home extends CI_Controller
 
     public function index()
     {
-        if ($this->level == "Super Admin") {
+        if ($this->level == "Super Admin" || $this->level == "Reporting") {
             $data = [
                 'level' => $this->level,
                 'content' => 'pages/home',

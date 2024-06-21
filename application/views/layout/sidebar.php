@@ -41,13 +41,19 @@
                         </a>
                     </li>
                     <li>
+                        <a href="<?= base_url('adm/golongan') ?>">
+                            <i class="bx bx-right-arrow-alt"></i>
+                            Data Golongan Bantuan
+                        </a>
+                    </li>
+                    <li>
                         <a href="<?= base_url('adm/siswa') ?>">
                             <i class="bx bx-right-arrow-alt"></i>
                             Data Siswa
                         </a>
                     </li>
                     <li>
-                        <a href="<?= base_url('adm/sdm') ?>">
+                        <a href="<?= base_url('adm/users') ?>">
                             <i class="bx bx-right-arrow-alt"></i>
                             Data Petugas ( SDM )
                         </a>
@@ -79,6 +85,27 @@
                         <a href="<?= base_url('adm/transaksi/riwayat') ?>">
                             <i class="bx bx-right-arrow-alt"></i>
                             Riwayata Transaksi
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <?php } ?>
+
+
+            <?php if ($this->session->userdata('level') == "Super Admin" || $this->session->userdata('level') == "Reporting") { ?>
+            <li class="menu-label">Laporan</li>
+            <li>
+                <a class="has-arrow" href="javascript:;">
+                    <div class="parent-icon">
+                        <i class="bx bx-calendar"></i>
+                    </div>
+                    <div class="menu-title">Modul Laporan</div>
+                </a>
+                <ul>
+                    <li>
+                        <a href="<?= base_url('adm/laporan') ?>">
+                            <i class="bx bx-right-arrow-alt"></i>
+                            Laporan Data SPP Periode
                         </a>
                     </li>
                 </ul>

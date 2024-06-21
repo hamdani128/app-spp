@@ -52,6 +52,7 @@
                                     <th>Orang Tua Laki</th>
                                     <th>Orang Tua Perempuan</th>
                                     <th>No.HP</th>
+                                    <th>Golongan Bantuan</th>
                                     <th>Status Users</th>
                                     <th>Status Transaksi</th>
                                 </tr>
@@ -72,7 +73,7 @@
                                                     <i class="bx bx-edit"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-dark" ng-click="AktivasiAkunSiswa(dt)">
-                                                    <i class="bx bx-user"></i>
+                                                    <i class="bx bx-check-shield"></i>
                                                 </button>
                                                 <button class="btn btn-sm btn-info"
                                                     ng-click="AktivasiTransaksiSiswa(dt)">
@@ -88,6 +89,7 @@
                                     <td>{{dt.ortu_laki}}</td>
                                     <td>{{dt.ortu_perempuan}}</td>
                                     <td>{{dt.no_hp}}</td>
+                                    <td>{{dt.golongan}}</td>
                                     <td>
                                         <span ng-if="dt.status_akun=='Non Active'"
                                             class="badge bg-secondary">{{dt.status_akun}}</span>
@@ -118,7 +120,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
-                        <h5 class="modal-title text-white">Tambah Data Kelas</h5>
+                        <h5 class="modal-title text-white">Tambah Data Siswa</h5>
                         <button type="button" class="btn-close btn-white" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
@@ -167,13 +169,22 @@
                                     <input type="text" name="no_hp" id="no_hp" class="form-control"
                                         placeholder="Masukkan No.handphone" ng-model="no_hp">
                                 </div>
+                                <div class="form-group pt-2">
+                                    <label for="">Golongan Bantuan</label>
+                                    <select name="cmb_golongan" id="cmb_golongan" class="form-control">
+                                        <option value="">Pilih Golongan</option>
+                                        <option ng-repeat="option in GolonganOptions" value="{{option.id}}">
+                                            {{option.golongan}}
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <div class="row">
                             <div class="col-md-12">
-                                <button class="btn btn-md btn-primary" ng-click="SimpanKelas()">
+                                <button class="btn btn-md btn-primary" ng-click="SimpanSiswa()">
                                     <i class="bx bx-edit"></i>
                                     Submit
                                 </button>
@@ -192,7 +203,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header bg-warning">
-                        <h5 class="modal-title text-white">Update Data Kelas</h5>
+                        <h5 class="modal-title text-white">Update Data Siswa</h5>
                         <button type="button" class="btn-close btn-white" data-bs-dismiss="modal" aria-labe
                             l="Close"></button>
                     </div>
@@ -248,6 +259,15 @@
                                     <label for="">No.HP</label>
                                     <input type="text" ng-model="no_hp_update" name="no_hp_update" id="no_hp_update"
                                         class="form-control" placeholder="Masukkan No.handphone">
+                                </div>
+                                <div class="form-group pt-2">
+                                    <label for="">Golongan Bantuan</label>
+                                    <select name="cmb_golongan_update" id="cmb_golongan_update" class="form-control">
+                                        <option value="">Pilih Golongan</option>
+                                        <option ng-repeat="option in GolonganOptions" value="{{option.id}}">
+                                            {{option.golongan}}
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                         </div>

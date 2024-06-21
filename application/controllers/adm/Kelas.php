@@ -19,7 +19,7 @@ class Kelas extends CI_Controller
         $this->payload = json_decode(file_get_contents("php://input"), true);
         $this->userid = $this->session->userdata("user_id");
         $this->now = date("Y-m-d H:i:s");
-        $this->level = $this->session->userdata("level  ");
+        $this->level = $this->session->userdata("level");
     }
     public function index()
     {

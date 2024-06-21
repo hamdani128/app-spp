@@ -94,7 +94,9 @@ class Siswa extends CI_Controller
                 'Jumlah Dibayar : ' .  $this->input->post('jumlah_dibayar') . "\n" .
                 'Meode Bayar : ' .  $this->input->post('channel_bayar') . "\n";
             // echo $message;
-            $$this->M_transaksi->sendWAImage($sumber_file_server,  $message, $this->db->get("settings")->row()->number_blast);
+            $this->M_transaksi->SendWA($this->db->get("settings")->row()->number_blast, $message);
+            // $this->M_transaksi->sendWAImage($sumber_file_server,  $message, $this->db->get("settings")->row()->number_blast);
+            // $this->M_transaksi->SendImage2($sumber_file_server,  $message, $this->db->get("settings")->row()->number_blast);
             $data = [
                 'file_image' => $uploader['upload_data']['file_name'],
                 'no_invoice' => $invoice,

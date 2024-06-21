@@ -197,6 +197,9 @@
     <script src="<?= base_url() ?>public/assets/custom/riwayat_transaksi.js"></script>
     <script src="<?= base_url() ?>public/assets/custom/home_siswa.js"></script>
     <script src="<?= base_url() ?>public/assets/custom/setting.js"></script>
+    <script src="<?= base_url() ?>public/assets/custom/golongan.js"></script>
+    <script src="<?= base_url() ?>public/assets/custom/sdm.js"></script>
+    <script src="<?= base_url() ?>public/assets/custom/laporan.js"></script>
 
     <script src="<?= base_url() ?>public/assets/plugins/fancy-file-uploader/jquery.ui.widget.js"></script>
     <script src="<?= base_url() ?>public/assets/plugins/fancy-file-uploader/jquery.fileupload.js"></script>
